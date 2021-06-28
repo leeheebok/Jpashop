@@ -12,22 +12,26 @@ import java.util.List;
 @Getter @Setter
 public class Category {
 
+    //GenerateValue 는 Sequence 를 자동적으로 생성해줍니다.
     @Id @GeneratedValue
     @Column(name = "category_id")
     private Long id;
 
     private String name;
 
+    //ManyToMany는 거의 쓰이지 않는다.
     @ManyToMany
     @JoinTable(name = "category_item",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> items = new ArrayList<>();
 
+    //주어절에는 Many가 먼저 들어간다!
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
 
+    //받는 쪽은 One이 먼저
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
 

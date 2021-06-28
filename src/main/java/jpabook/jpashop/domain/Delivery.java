@@ -18,9 +18,11 @@ public class Delivery {
     @OneToOne(mappedBy = "delivery",fetch = LAZY)
     private Order order;
 
+    //공통된 것을 하나로 묶을때
     @Embedded
     private Address address;
 
+    //Enum 을 쓸때
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status; //READY, COMP
 }
