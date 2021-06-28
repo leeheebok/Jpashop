@@ -19,12 +19,13 @@ public class ItemController {
 
     private final ItemService itemService;
 
+    //Get 은 조회
     @GetMapping("/items/new")
     public String createForm(Model model){
         model.addAttribute("form", new BookForm());
         return "items/createItemForm";
     }
-
+    //Post 는 수정
     @PostMapping("/items/new")
     public String create(BookForm form){
         Book book = new Book();
