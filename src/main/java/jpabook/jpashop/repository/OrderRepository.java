@@ -71,6 +71,7 @@ public class OrderRepository {
                     orderSearch.getOrderStatus());
             criteria.add(status);
         }
+
         //회원 이름 검색
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             Predicate name =
