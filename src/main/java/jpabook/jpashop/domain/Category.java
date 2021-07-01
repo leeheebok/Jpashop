@@ -19,12 +19,8 @@ public class Category {
 
     private String name;
 
-    //ManyToMany는 거의 쓰이지 않는다.
-    @ManyToMany
-    @JoinTable(name = "category_item",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private List<Item> items = new ArrayList<>();
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<CategoryItem> categoryItems  = new ArrayList<>();
 
     //주어절에는 Many가 먼저 들어간다!
     @ManyToOne(fetch = FetchType.LAZY)

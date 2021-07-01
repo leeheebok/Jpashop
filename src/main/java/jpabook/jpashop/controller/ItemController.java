@@ -50,7 +50,14 @@ public class ItemController {
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model){
         Book item = (Book) itemService.findOne(itemId);
 
-        BookForm form = new BookForm(item.getId(), item.getName(), item.getPrice(), item.getStockQuantity(), item.getAuthor(), item.getIsbn());
+        BookForm form = new BookForm();
+        form.setId(item.getId());
+        form.setName(item.getName());
+        form.setPrice(item.getPrice());
+        form.setStockQuantity(item.getStockQuantity());
+        form.setAuthor(item.getAuthor());
+        form.setIsbn(item.getIsbn());
+
         model.addAttribute("form", form);
         return "items/updateItemForm";
     }
@@ -67,6 +74,6 @@ public class ItemController {
         book.setIsbn(form.getIsbn());
 
         itemService.saveItem(book);
-        return "redirect:items";
+        return "redirect:/items";
     }
 }
