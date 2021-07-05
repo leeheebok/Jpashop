@@ -90,6 +90,7 @@ class MemberServiceIntegrationTest {
         //when
         List<Member> members = memberService.findMembers();
 
+        //them
         assertThat(members).hasSize(2);
     }
 

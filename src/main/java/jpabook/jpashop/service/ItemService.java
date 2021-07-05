@@ -21,6 +21,7 @@ public class ItemService {
     public void saveItem(Item item){
         itemRepository.save(item);
     }
+
     @Transactional
     public Item updateItem(Long itemid, Book param){
         Item findItem = itemRepository.findOne(itemid);
@@ -34,7 +35,7 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public Item findOne(Long itemId){
+    public Item findOne(Long itemId) {
         return itemRepository.findOne(itemId);
     }
 }
