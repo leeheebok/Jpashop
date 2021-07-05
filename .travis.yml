@@ -12,11 +12,6 @@ jobs:
     - stage: test
       script:
         - "./gradlew test"
-    - stage: build
-      script:
-        - "./gradlew clean build"
 
 stages:
   - name: test
-  - name: build
-    if: branch = master
