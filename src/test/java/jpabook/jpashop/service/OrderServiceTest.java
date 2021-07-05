@@ -41,7 +41,7 @@ public class OrderServiceTest {
         member.setAddress(new Address("서울", "강가", "123-123"));
     }
 
-    private void createBook(Long id, ) {
+    private void createBook() {
         Book book = new Book();
         book.setName("JPA");
         book.setPrice(10000);
