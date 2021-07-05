@@ -2,61 +2,80 @@ package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.repository.MemberRepository;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.persistence.EntityManager;
+import java.util.Collections;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
+import static org.assertj.core.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Transactional
-class MemberServiceTest {
+@RunWith(MockitoJUnitRunner.class)
+public class MemberServiceTest {
 
-    @Autowired MemberRepository memberRepository;
-    @Autowired MemberService memberService;
-    @Autowired EntityManager em;
+    @InjectMocks
+    MemberService memberService;
+
+    @Mock
+    MemberRepository memberRepository;
 
     @Test
-//    @Rollback(value = false)
-    public void 회원가입() throws Exception{
+    public void 회원_가입() {
         //given
         Member member = new Member();
         member.setName("Lee");
+        given(memberRepository.findByName(member.getName())).willReturn(Collections.emptyList());
 
         //when
-        Long saveId = memberService.join(member);
+        memberService.join(member);
 
         //then
-        assertEquals(member, memberRepository.findOne(saveId));
+        then(memberRepository).should().findByName(member.getName());
+        then(memberRepository).should().save(member);
+
     }
 
     @Test
-    public void 중복_회원_예외() throws Exception{
+    public void 중복_회원_예외() {
         //given
-        Member member1 = new Member();
-        member1.setName("Lee");
-
-        Member member2 = new Member();
-        member2.setName("Lee");
+        Member member = new Member();
+        member.setName("Lee");
+        given(memberRepository.findByName(member.getName())).willReturn(List.of(member));
 
         //when
-        memberService.join(member1);
-        try{
-            memberService.join(member2); //예외가 발생하여야한다
-        }catch (IllegalArgumentException e){
-            return;
-        }
+        assertThatThrownBy(() -> {
+            memberService.join(member);
+        }).isInstanceOf(IllegalArgumentException.class);
 
-
-        //then
-        fail("예외가 발생해야 한다. ");
-
+        then(memberRepository).should(never()).save(member);
     }
 
+
+    @Test
+    public void findMembers() {
+    }
+
+    @Test
+    public void findOne() {
+    }
+
+    @Test
+    public void update() {
+       //given
+        Member member = new Member();
+        member.setId(1L);
+        member.setName("Lee");
+
+        given(memberRepository.findOne(1L)).willReturn(member);
+
+        //when
+        memberService.update(1L, "Lee hee bok");
+
+        //then
+        then(memberRepository).should().findOne(member.getId());
+    }
 }
