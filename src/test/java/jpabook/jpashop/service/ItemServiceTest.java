@@ -26,7 +26,9 @@ public class ItemServiceTest {
     @Test
     public void saveItem() {
         Book book = new Book();
-        book.setName("Name");
+        book.setPrice(1000);
+        book.setName("book1");
+        book.setStockQuantity(30);
 
         itemService.saveItem(book);
 

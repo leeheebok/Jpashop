@@ -57,10 +57,37 @@ public class MemberServiceTest {
 
     @Test
     public void findMembers() {
+        //given
+        Member member1 = new Member();
+        member1.setName("Lee");
+
+        Member member2 = new Member();
+        member2.setName("Hee");
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        //when
+        List<Member> findMembers = memberService.findMembers();
+
+        //then
+        assertThat(memberRepository.findAll());
     }
 
     @Test
     public void findOne() {
+        //given
+        Member member1 = new Member();
+        member1.setName("Lee");
+        member1.setId(1L);
+
+        given(memberRepository.findOne(1L)).willReturn(member1);
+        //when
+        Member findMember = memberService.findOne(1L);
+
+        //then
+        then(memberRepository).should().findOne(1L);
+        assertThat(findMember.getId()).isEqualTo(1L);
     }
 
     @Test

@@ -32,7 +32,7 @@ public class ItemServiceIntegrationTest {
         book.setName("book1");
         book.setStockQuantity(30);
 
-        itemRepository.save(book);
+        itemService.saveItem(book);
 
         assertThat(itemRepository.findOne(book.getId())).isEqualTo(book);
     }
