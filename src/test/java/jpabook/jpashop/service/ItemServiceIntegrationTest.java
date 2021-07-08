@@ -27,6 +27,7 @@ public class ItemServiceIntegrationTest {
 
     @Test
     public void saveItem() {
+        //given
         Book book = new Book();
         book.setPrice(1000);
         book.setName("book1");
@@ -39,16 +40,18 @@ public class ItemServiceIntegrationTest {
 
     @Test
     public void updateItem() {
+        //given
         Book book = new Book();
         book.setPrice(1000);
         book.setName("book1");
         book.setStockQuantity(30);
 
-
         itemRepository.save(book);
 
+        //when
         itemService.updateItem(book.getId(), book);
 
+        //then
         Item findbook = itemService.findOne(book.getId());
         assertThat(findbook.getName()).isEqualTo("book1");
 
@@ -62,12 +65,14 @@ public class ItemServiceIntegrationTest {
 
         Book book2 = new Book();
         book2.setName("book2");
+
         itemRepository.save(book1);
         itemRepository.save(book2);
 
         //when
         List<Item> items = itemService.findItems();
 
+        //then
         assertThat(items).hasSize(2);
     }
 
