@@ -10,6 +10,7 @@ import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 //Order -> Delivery
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
@@ -33,7 +35,7 @@ public class OrderSimpleApiController {
     // 그래도 안되면 DTO로 직접 조희하는 방법을 사용한다. ->V4
     // 최후의 방법을 JPA가 제공하는 네이티브 SQL이나 스프링 JDBC Template을 사용해서 SQL을 직접 사용한다.
 
-    @GetMapping("/api/v1/simple-orders")
+    @GetMapping("/v1/simple-orders")
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findAllByCriteria(new OrderSearch());
         for (Order order : all){
@@ -43,7 +45,7 @@ public class OrderSimpleApiController {
         return all;
     }
 
-    @GetMapping("/api/v2/simple-orders")
+    @GetMapping("/v2/simple-orders")
     public List<SimpleOrderDto> orderV2(){
         //Order 2
         // N + 1 -> 1 + Member N + Delivery N
@@ -54,7 +56,7 @@ public class OrderSimpleApiController {
         return result;
     }
 
-    @GetMapping("/api/v3/simple-orders")
+    @GetMapping("/v3/simple-orders")
     public List<SimpleOrderDto> orderV3(){
        List<Order> orders = orderRepository.findAllWithMemberDelivery();
         List<SimpleOrderDto> result = orders.stream()
@@ -64,7 +66,7 @@ public class OrderSimpleApiController {
         return result;
     }
 
-    @GetMapping("/api/v4/simple-orders")
+    @GetMapping("/v4/simple-orders")
     public List<OrderSimpleQueryDto> orderV4(){
         return orderSimpleQueryRepository.findOrderDtos();
 

@@ -9,23 +9,25 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping("/members/new")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/members/new")
+    @GetMapping
     public String createForm(Model model){
         model.addAttribute("memberForm", new MemberForm());
         return "members/createMemberForm";
     }
 
-    @PostMapping("/members/new")
+    @PostMapping
     public String create(@Valid MemberForm form, BindingResult result){
 
         if (result.hasErrors()){
