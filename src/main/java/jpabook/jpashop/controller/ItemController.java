@@ -6,27 +6,25 @@ import jpabook.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/items")
 @RequiredArgsConstructor
 public class ItemController {
 
     private final ItemService itemService;
 
     //Get 은 조회
-    @GetMapping("/items/new")
+    @GetMapping("/new")
     public String createForm(Model model){
         model.addAttribute("form", new BookForm());
         return "items/createItemForm";
     }
     //Post 는 수정
-    @PostMapping("/items/new")
+    @PostMapping("/new")
     public String create(BookForm form){
         Book book = new Book();
         book.setName(form.getName());
@@ -39,14 +37,14 @@ public class ItemController {
         return "redirect:/";
     }
 
-    @GetMapping("/items")
+    @GetMapping
     public String list(Model model){
         List<Item> items = itemService.findItems();
         model.addAttribute("items", items);
         return "items/itemList";
     }
 
-    @GetMapping("items/{itemId}/edit")
+    @GetMapping("/{itemId}/edit")
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model){
         Book item = (Book) itemService.findOne(itemId);
 
@@ -62,7 +60,7 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
-    @PostMapping("items/{itemId}/edit")
+    @PostMapping("/{itemId}/edit")
     public String updateItem(@PathVariable String itemId, @ModelAttribute("form") BookForm form){
 
         Book book = new Book();

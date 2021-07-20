@@ -153,6 +153,29 @@ public class OrderRepository {
 
     }
 
+    // Order 입장에서 1:n 관계에 있으면 페이징 처리가 불가해진다.
+    // 컬랙션 페치 조인은 1개만 사용할 수 있다.
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i", Order.class)
+                .getResultList();
+
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery("select o from Order o" +
+                " join fetch o.member m " +
+                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+
+    }
+
 }
 
 
