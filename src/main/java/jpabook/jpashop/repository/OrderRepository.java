@@ -14,9 +14,6 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jpabook.jpashop.domain.QMember.member;
-import static jpabook.jpashop.domain.QOrder.order;
-
 @Repository
 public class OrderRepository {
 
