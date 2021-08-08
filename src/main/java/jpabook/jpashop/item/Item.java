@@ -4,8 +4,13 @@ import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +24,15 @@ public abstract class Item {
     @Column(name = "item_id")
     private Long id;
 
+    @NotBlank
     private String name;
+
+    @Range(min = 1000, max = 100000)
+    @NotNull
     private int price;
+
+    @NotNull
+    @Max(value = 9999)
     private int stockQuantity;
 
     //== 비지니스 로직 ==//
