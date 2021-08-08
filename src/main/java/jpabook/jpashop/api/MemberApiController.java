@@ -24,7 +24,7 @@ public class MemberApiController {
         return memberService.findMembers();
     }
 
-    //API를 만들때는 파라미터를 나오든 뭐하든 절때 Etity 노출을 시키지 마세요!!
+    //API를 만들때는 파라미터를 나오든 뭐하든 절대 Entity 노출을 시키지 마세요!!
     //중간에 꼭 API에 스펙에 맞는 DTO 을 만들어 그것을 활용시키세요!
     @GetMapping("/api/v2/members")
     public Result memberV2(){
@@ -34,7 +34,6 @@ public class MemberApiController {
 
         return new Result(collect.size(), collect);
     }
-
 
     @Data
     @AllArgsConstructor
