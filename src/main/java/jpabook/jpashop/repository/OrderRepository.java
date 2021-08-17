@@ -95,7 +95,7 @@ public class OrderRepository {
 
     public List<Order> findAll(OrderSearch orderSearch){
 
-        return query .select(order)
+    return query .select(order)
                 .from(order)
                 .join(order.member, member)
                 .where(statusEq(orderSearch.getOrderStatus()), nameLike(orderSearch, member))
