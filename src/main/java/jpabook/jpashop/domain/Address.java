@@ -3,6 +3,7 @@ package jpabook.jpashop.domain;
 import lombok.Getter;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.validation.constraints.NotNull;
 
 @Embeddable
@@ -15,13 +16,13 @@ public class Address {
     @NotNull
     private String street;
 
-    @NotNull
-    private String zipcode;
+    @Embedded
+    private Zipcode zipcode;
 
     protected Address() {
     }
 
-    public Address(String city, String street, String zipcode) {
+    public Address(String city, String street, Zipcode zipcode) {
         this.city = city;
         this.street = street;
         this.zipcode = zipcode;
