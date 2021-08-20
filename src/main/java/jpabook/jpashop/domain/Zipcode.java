@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class Zipcode {
 
-
     @NotNull
     private String Number;
 }
